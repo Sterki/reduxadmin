@@ -93,3 +93,13 @@ exports.obtieneUsuario = async(req, res) =>{
                 res.status(500).json({msg:'Hubo un error'});
         }
 }
+exports.obtieneAllUsers = async(req, res)=>{
+
+        try {
+                const usuarios = await Users.find({});
+                res.json(usuarios);
+        } catch (error) {
+            console.log(error);
+        }
+
+}
