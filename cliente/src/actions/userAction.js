@@ -9,9 +9,11 @@ import {BEGIN_GET_USERDATA,
         MOSTRAR_USUARIO,
         MOSTRAR_CREA_USUARIO,
         OBTIENE_ALL_USERS,
-        CREA_USUARIOS_EXITO,
+        COMIENZA_CREA_USUARIO,
         CERRAR_SESION,
-        ELIMINAR_USUARIO
+        ELIMINAR_USUARIO,
+        OBTIENE_USUARIO_ELIMINAR,
+        CREA_USUARIOS_EXITO
 } from '../types/index';
 import clienteAxios from '../config/axios';
 import tokenAuth from '../config/tokenAuth';
@@ -159,11 +161,12 @@ export function creaUsuariosAction(datos){
 
        
         return async(dispatch)=>{
-
+                                dispatch( ComienzaCreaNuevoUsuario(datos) );
                         try {   
                                 const resultado = await clienteAxios.post('/api/users', datos);   
-                                console.log(resultado)                                     
-                                dispatch( creaUsuario() );
+                                dispatch( creaUsuarioExito() );
+                                                          
+                               
                                 
                         } catch (error) {
                                 console.log(error.response)
@@ -171,10 +174,17 @@ export function creaUsuariosAction(datos){
                         
         }
 }
-const creaUsuario = () => ({
+const ComienzaCreaNuevoUsuario = (datos) => ({
+
+        type: COMIENZA_CREA_USUARIO,
+        payload: datos
+
+})
+const creaUsuarioExito = () => ({
 
         type: CREA_USUARIOS_EXITO
 })
+
 
 export function cerrarSesionAction(){
 
@@ -198,19 +208,25 @@ export function eliminarUsuarioAction(usuarioid){
         
         return async(dispatch)=>{
 
+                        dispatch( obtieneEliminarUsuario(usuarioid) );
                         try {
-                               await clienteAxios.delete(`/api/users/${usuarioid}`);                                                           
-                                dispatch( eliminarUsuario(usuarioid) );
+                                await clienteAxios.delete(`/api/users/${usuarioid}`);   
+                                dispatch( eliminaUsuario() );
+                                
 
-                        } catch (error) {
+                        }catch(error) {
                                 console.log(error.response)
                         }
         }
 }
-const eliminarUsuario = (usuarioid) => ({
+const obtieneEliminarUsuario = (usuarioid) => ({
 
-        type: ELIMINAR_USUARIO,
+        type: OBTIENE_USUARIO_ELIMINAR,
         payload: usuarioid
            
+})
+const eliminaUsuario = () => ({
+
+        type: ELIMINAR_USUARIO
 
 })

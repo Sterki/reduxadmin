@@ -1,16 +1,21 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {eliminarUsuarioAction} from '../../actions/userAction';
+import {eliminarUsuarioAction, obtieneUsuarioEliminarAction, mostrarUsuarioAction} from '../../actions/userAction';
 const ListadoUsuarios = ({usuario, count}) => {
 
    const dispatch = useDispatch();
     const {_id, nombre, creado, email} = usuario;
     const eliminaruaurio = (id) => dispatch( eliminarUsuarioAction(id) );
+    // const obteniendoUsuarioEliminar = (usuario) => dispatch( obtieneUsuarioEliminarAction(usuario) );
+    // const mostrarAdministraUsuarios = () => dispatch( mostrarUsuarioAction() );
+
+    
 
     const eliminarUsuario = (id)=>{
 
         eliminaruaurio(id);
-
+        // obteniendoUsuarioEliminar(id);
+        
     }
 
 

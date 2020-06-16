@@ -14,13 +14,15 @@ const AdministrarUsuarios = () => {
   const dispatch = useDispatch();
   const usuarios = useSelector( state => state.userdata.listadousuarios);
   console.log(usuarios);
+
   const obtieneUsuarios = () => dispatch( obtieneUsuarioAction() );
  
+
   useEffect(()=>{
 
     obtieneUsuarios();
 
-  }, [])
+  }, [usuarios])
 
     return (
 

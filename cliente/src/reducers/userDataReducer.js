@@ -9,9 +9,10 @@ import {BEGIN_GET_USERDATA,
     MOSTRAR_USUARIO,
     MOSTRAR_CREA_USUARIO,
     OBTIENE_ALL_USERS,
-    CREA_USUARIOS_EXITO,
+    COMIENZA_CREA_USUARIO,
     CERRAR_SESION,
-    ELIMINAR_USUARIO
+    ELIMINAR_USUARIO,
+    OBTIENE_USUARIO_ELIMINAR
 } from '../types/index';
 
 const inisialState = {
@@ -24,7 +25,8 @@ const inisialState = {
     mostrarusuarios: false,
     mostrarcreausuarios: true,
     listadousuarios: [],
-    autenticado: null
+    autenticado: null,
+    usuarioeliminar: null
 }
 
 export default (state = inisialState, action) =>{
@@ -85,10 +87,23 @@ export default (state = inisialState, action) =>{
             datosusuario: null,
             token: null
         }
-        case ELIMINAR_USUARIO:           
+        case OBTIENE_USUARIO_ELIMINAR:
             return{
+
                 ...state,
-                listadousuarios: state.listadousuarios.filter(usuario => usuario._id !== action.payload)
+                usuarioeliminar: action.payload
+            }       
+       case ELIMINAR_USUARIO:
+           return{
+               ...state,
+               listadousuarios: state.listadousuarios.filter(listado => listado._id !== state.usuarioeliminar),
+               usuarioeliminar: null
+           }
+        case COMIENZA_CREA_USUARIO:
+            return{
+
+                ...state,
+                listadousuarios: [...state.listadousuarios, action.payload]
             }
         default: return state;
     }

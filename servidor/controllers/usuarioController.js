@@ -108,7 +108,7 @@ exports.eliminaUsuarios = async(req, res)=>{
         try {
 
             await Users.findOneAndRemove({_id : req.params.id});
-            
+            res.json({msg: "eliminado con exito"});
         } catch (error) {
             console.log(error);
             res.status(500).json({msg: 'Hubo un error intentando eliminar'});
