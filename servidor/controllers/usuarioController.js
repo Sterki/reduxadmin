@@ -103,3 +103,15 @@ exports.obtieneAllUsers = async(req, res)=>{
         }
 
 }
+exports.eliminaUsuarios = async(req, res)=>{
+
+        try {
+
+            await Users.findOneAndRemove({_id : req.params.id});
+            
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({msg: 'Hubo un error intentando eliminar'});
+        }
+
+}
